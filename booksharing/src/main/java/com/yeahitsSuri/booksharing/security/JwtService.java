@@ -16,11 +16,12 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class jwtService {
-  private long jwtExpiration;
+public class JwtService {
   @Value("${spring.application.security.jwt.expiration}")
-  private String secretKey;
+  private long jwtExpiration;
+
   @Value("${spring.application.security.jwt.secret-key}")
+  private String secretKey;
 
 
   public String extractUsername(String token) {
@@ -46,7 +47,7 @@ public class jwtService {
     return generateToken(new HashMap<>(), userDetails);
   }
 
-  private String generateToken(Map<String,Object> claims, UserDetails userDetails) {
+  public String generateToken(Map<String,Object> claims, UserDetails userDetails) {
     return buildToken(claims, userDetails, jwtExpiration);
   }
 

@@ -21,10 +21,10 @@ spring:
     properties:
       mail:
         smtp:
-          trust: "*"
-        auth: true
-        starttls:
-          enable: true
+          auth: true
+          starttls:
+            enable: true
+        trust: "*"
         connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
@@ -34,3 +34,9 @@ spring:
       jwt:
         secret-key: 4716B937DD87917266E3CC8563DE6
         expiration: 864000
+    mailing:
+      frontend:
+        activation-url: http://localhost:4200/activate-account
+
+server:
+  port: 8088
