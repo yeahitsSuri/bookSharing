@@ -36,13 +36,16 @@ public class User implements UserDetails, Principal {
    */
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+
   private String firstName;
   private String lastName;
   private LocalDate dateOfBirth;
+
   @Column(unique = true)
   private String email;
+
   private String password;
   private boolean accountLocked;
   private boolean enabled;
