@@ -114,7 +114,7 @@ public class AuthenticationService {
             () -> new RuntimeException("Invalid token"));
     if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
       sendValidationEmail(savedToken.getUser());
-      throw new MessagingException("Token has expired. New token has been sent to your email.");
+      throw new RuntimeException("Token has expired. New token has been sent to your email.");
     }
     var user = userRepo.findById(savedToken.getUser().getId()).orElseThrow(() -> new UsernameNotFoundException("user not found"));
     user.setEnabled(true);

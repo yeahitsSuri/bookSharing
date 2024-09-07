@@ -23,31 +23,11 @@ public class JwtService {
   @Value("${spring.application.security.jwt.secret-key}")
   private String secretKey;
 
-
-  public String extractUsername(String token) {
-    return extractClaim(token,Claims::getSubject);
-  }
-
-  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-    final Claims claims = extractAllClaims(token);
-    return claimsResolver.apply(claims);
-  }
-
-  private Claims extractAllClaims(String token) {
-    return Jwts
-            .parser()
-            .setSigningKey(getSignInkey())
-            .build()
-            .parseEncryptedClaims(token)
-            .getBody();
-  }
-
-
   public String generateToken(UserDetails userDetails) {
     return generateToken(new HashMap<>(), userDetails);
   }
 
-  public String generateToken(Map<String,Object> claims, UserDetails userDetails) {
+  public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
     return buildToken(claims, userDetails, jwtExpiration);
   }
 
@@ -89,5 +69,22 @@ public class JwtService {
     return extractClaim(token, Claims::getExpiration);
   }
 
+  public String extractUsername(String token) {
+    return extractClaim(token,Claims::getSubject);
+  }
+
+  public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    final Claims claims = extractAllClaims(token);
+    return claimsResolver.apply(claims);
+  }
+
+  private Claims extractAllClaims(String token) {
+    return Jwts
+            .parser()
+            .setSigningKey(getSignInkey())
+            .build()
+            .parseSignedClaims(token)
+            .getBody();
+  }
 
 }
