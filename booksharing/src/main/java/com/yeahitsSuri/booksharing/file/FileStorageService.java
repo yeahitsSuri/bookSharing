@@ -1,6 +1,5 @@
 package com.yeahitsSuri.booksharing.file;
 
-import com.yeahitsSuri.booksharing.book.Book;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
