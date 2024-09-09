@@ -1,5 +1,7 @@
 package com.yeahitsSuri.booksharing.user;
 
+import com.yeahitsSuri.booksharing.book.Book;
+import com.yeahitsSuri.booksharing.history.BookTransactionHistory;
 import com.yeahitsSuri.booksharing.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -53,6 +55,12 @@ public class User implements UserDetails, Principal {
   @ManyToMany(fetch = FetchType.EAGER)
   private List<Role> roles;
   // private List<Tokens> tokens;
+
+  @OneToMany(mappedBy = "owner") // one user can have many books
+  private List<Book> books;
+
+  @OneToMany(mappedBy = "user")
+  private List<BookTransactionHistory> histories;
 
   @CreatedDate
   @Column(updatable = false, nullable = false)
