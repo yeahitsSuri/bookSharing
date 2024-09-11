@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/services';
 import { HttpClientModule } from '@angular/common/http';
-
+import { TokenService } from '../../services/token/token.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -22,7 +22,8 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private tokenService: TokenService
   ) {
 
   }
@@ -31,9 +32,9 @@ export class LoginComponent {
     this.authService.authenticate({
       body: this.authRequest
     }).subscribe({
-      next: () => {
-        //todo save the token
-        this.router.navigate(['/books']);
+      next: (res) => {
+        this.tokenService.token = res.token as string;
+        this.router.navigate(['books']);
       },
       error: (error) => {
         console.log(error);
