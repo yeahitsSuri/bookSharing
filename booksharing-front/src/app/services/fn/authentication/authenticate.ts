@@ -8,11 +8,11 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { AuthenticationRequest } from '../../models/authentication-request';
 import { AuthenticationResponse } from '../../models/authentication-response';
-import { AuthticationRequest } from '../../models/authtication-request';
 
 export interface Authenticate$Params {
-      body: AuthticationRequest
+      body: AuthenticationRequest
 }
 
 export function authenticate(http: HttpClient, rootUrl: string, params: Authenticate$Params, context?: HttpContext): Observable<StrictHttpResponse<AuthenticationResponse>> {
