@@ -3,6 +3,8 @@ package com.yeahitsSuri.booksharing.book;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+
 public record BookRequest(
         Integer id,
         @NotNull(message = "100")
@@ -15,10 +17,12 @@ public record BookRequest(
 
         @NotNull(message = "102")
         @NotEmpty(message = "102")
+        @NotNull(message = "104")
         String isbn,
         @NotNull(message = "103")
         @NotEmpty(message = "103")
         String synopsis,
         boolean shareable
+
 ) {
 }

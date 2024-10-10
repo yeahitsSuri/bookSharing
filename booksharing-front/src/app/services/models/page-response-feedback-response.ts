@@ -4,7 +4,7 @@
 
 import { FeedbackResponse } from '../models/feedback-response';
 export interface PageResponseFeedbackResponse {
-  contet?: Array<FeedbackResponse>;
+  content?: Array<FeedbackResponse>;
   first?: boolean;
   last?: boolean;
   number?: number;
