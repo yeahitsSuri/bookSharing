@@ -1,10 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './pages/main/main.component';
+import { BookListComponent } from './pages/book-list/book-list.component';
+
 const routes: Routes = [
   {
     path: '', // load the main component by default
-    component: MainComponent
+    component: MainComponent,
+    children: [
+      {
+        path: '',
+        component: BookListComponent
+      }
+    ]
   }
 ];
 

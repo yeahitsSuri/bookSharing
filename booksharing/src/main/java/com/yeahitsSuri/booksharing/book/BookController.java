@@ -22,6 +22,7 @@ public class BookController {
           @Valid @RequestBody BookRequest request,
           Authentication connectedUser
   ) {
+    System.out.println("Received BookRequest: " + request);
     return ResponseEntity.ok(service.save(request, connectedUser));
   }
 
