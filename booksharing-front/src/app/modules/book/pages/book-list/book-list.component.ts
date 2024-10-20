@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { BookService } from '../../../../services/services/book.service';
 import { Router } from '@angular/router';
 import { PageResponseBookResponse } from '../../../../services/models/page-response-book-response';
+import { BookCardComponent } from "../../components/book-card/book-card.component";
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports: [ CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, BookCardComponent],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
 })
@@ -34,6 +35,7 @@ export class BookListComponent implements OnInit{
       size: this.size
     }).subscribe(
       {next: (books) => {
+        console.log('RECEIVED books ARE', books);
       this.bookResponse = books;
     }});
   }
