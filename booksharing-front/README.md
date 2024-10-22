@@ -1,27 +1,98 @@
-# BooksharingFront
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.9.
+# Book Sharing API
 
-## Development server
+This project is a Spring Boot application designed for sharing books among users. It provides functionalities for managing books, feedback, and user roles, and it includes a RESTful API for interacting with the system.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+- **Book Management**: Add, update, and retrieve books.
+- **Feedback System**: Users can provide feedback on books.
+- **User Roles**: Manage user roles and permissions.
+- **Security**: Implemented with Spring Security.
+- **Pagination**: Supports paginated responses for book and feedback listings.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Technologies Used
 
-## Build
+- **Spring Boot**: Framework for building the application.
+- **Spring Data JPA**: For database interactions.
+- **Spring Security**: For securing the application.
+- **PostgreSQL**: Database for storing data.
+- **Lombok**: To reduce boilerplate code.
+- **OpenAPI**: For API documentation.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Getting Started
 
-## Running unit tests
+### Prerequisites
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Java 17
+- Maven
+- PostgreSQL
 
-## Running end-to-end tests
+### Installation
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/booksharing.git
+   cd booksharing
+   ```
 
-## Further help
+2. **Configure the database**:
+   Update the `application.properties` file with your PostgreSQL database credentials.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3. **Build the project**:
+   ```bash
+   mvn clean install
+   ```
+
+4. **Run the application**:
+   ```bash
+   mvn spring-boot:run
+   ```
+
+### API Endpoints
+
+- **Books**:
+  - `GET /books`: Retrieve all books.
+  - `GET /books/{book-id}`: Retrieve a book by ID.
+  - `POST /books`: Add a new book.
+  - `PATCH /books/shareable/{book_id}`: Update shareable status.
+
+- **Feedback**:
+  - `GET /feedbacks/boook/{book_id}`: Retrieve feedback for a book.
+  - `POST /feedbacks`: Add feedback for a book.
+
+### Code Structure
+
+- **Book**: 
+  - Entity: `Book.java` 
+  - Service: `BookService.java`
+  - Controller: `BookController.java`
+  - Repository: `BookRepo.java`
+  - Mapper: `BookMapper.java`
+
+- **Feedback**:
+  - Entity: `Feedback.java`
+  - Service: `FeedbackService.java`
+  - Controller: `FeedbackController.java`
+  - Repository: `FeedbackRepo.java`
+  - Mapper: `FeedbackMapper.java`
+
+### Error Handling
+
+Global exception handling is implemented in `GlobalExceptionHandler.java` to manage application-wide errors.
+
+### Testing
+
+Tests are located in the `src/test/java/com/yeahitsSuri/booksharing` directory. Use the following command to run tests:
+```bash
+mvn test
+```
+
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+For any inquiries, please contact [yts9614@gmail.com](mailto:yts9614@gmail.com).
