@@ -149,8 +149,8 @@ public class BookService {
       throw new OperationNotPermittedException("The requested book cannot be borrowed, status is Archived or not shareable");
     }
     User user = ((User) connectedUser.getPrincipal());
-    if (!Objects.equals(book.getOwner().getId(), user.getId())) {
-      throw new OperationNotPermittedException("You can not borrow you own book");
+    if (Objects.equals(book.getOwner().getId(), user.getId())) {
+      throw new OperationNotPermittedException("You can not borrow your own book");
     }
     final boolean isBorrowed = bookTransactionHistoryRepo.isAlreadyBorrowedByUser(bookId, user.getId());
     if (isBorrowed) {
