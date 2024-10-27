@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 import { PageResponseBookResponse } from '../../../../services/models/page-response-book-response';
 import { BookCardComponent } from "../../components/book-card/book-card.component";
 import { BookResponse } from '../../../../services/models/book-response';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-my-books',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule, BookCardComponent],
+  imports: [CommonModule, HttpClientModule, FormsModule, BookCardComponent, RouterModule],
   templateUrl: './my-books.component.html',
   styleUrl: './my-books.component.scss'
 })
@@ -77,15 +78,28 @@ export class MyBooksComponent implements OnInit{
   }
 
   archiveBook(book: BookResponse) {
-    console.log(book);
+    this.bookService.updArchivedStatus({
+      'book_id': book.id as number
+    }).subscribe({
+      next: () => {
+        book.archived = !book.archived;
+      }
+    });
   }
 
   shareBook(book: BookResponse) {
-    console.log(book);
+    this.bookService.updShareableStatus({
+      'book_id': book.id as number
+    }).subscribe({
+      next: () => {
+        book.shareable = !book.shareable;
+      }
+    });
   }
 
   editBook(book: BookResponse) {
-    console.log(book);
+    this.router.navigate(['books', 'manage', book.id]);
+    // navigate to the manage book page with the book id
   }
-
 }
+
