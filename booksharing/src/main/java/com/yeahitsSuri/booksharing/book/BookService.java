@@ -171,28 +171,26 @@ public class BookService {
     if (book.isArchived() || !book.isShareable()) {
       throw new OperationNotPermittedException("The requested book cannot be borrowed, status is Archived or not shareable");
     }
+
     User user = ((User) connectedUser.getPrincipal());
-    if (!Objects.equals(book.getOwner().getId(), user.getId())) {
-      throw new OperationNotPermittedException("You can not borrow or return your own book");
-    }
     BookTransactionHistory history = bookTransactionHistoryRepo.findByBookIdAndUserId(bookId, user.getId())
-            .orElseThrow(() -> new EntityNotFoundException("You did not borrow this book"));;
+            .orElseThrow(() -> new EntityNotFoundException("You did not borrow this book"));
     history.setReturned(true);
     return bookTransactionHistoryRepo.save(history).getId();
   }
 
   public Integer approveReturnBook(Integer bookId, Authentication connectedUser) {
     Book book = bookRepo.findById(bookId)
-            .orElseThrow(() -> new EntityNotFoundException("Book not found of id: " + bookId));
+            .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + bookId));
     if (book.isArchived() || !book.isShareable()) {
-      throw new OperationNotPermittedException("The requested book cannot be borrowed, status is Archived or not shareable");
+      throw new OperationNotPermittedException("The requested book cannot be approved for return, status is Archived or not shareable");
     }
     User user = ((User) connectedUser.getPrincipal());
     if (!Objects.equals(book.getOwner().getId(), user.getId())) {
-      throw new OperationNotPermittedException("You can not borrow or return you own book");
+      throw new OperationNotPermittedException("You cannot approve the return of a book you do not own");
     }
     BookTransactionHistory history = bookTransactionHistoryRepo.findByBookIdAndOwnerId(bookId, user.getId())
-            .orElseThrow(() -> new EntityNotFoundException("The book has not been returned yet."));;
+            .orElseThrow(() -> new EntityNotFoundException("The book has not been returned yet."));
     history.setReturnApproved(true);
     return bookTransactionHistoryRepo.save(history).getId();
   }
