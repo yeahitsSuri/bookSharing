@@ -26,12 +26,6 @@ export class HttpTokenInterceptor implements HttpInterceptor {
     }
 
 
-    // if (req.url.endsWith('/books')) {
-    //   return next.handle(req); // 不添加令牌，直接处理请求
-    // }
-
-
-
 
     if (token) {
       const authReq = req.clone({

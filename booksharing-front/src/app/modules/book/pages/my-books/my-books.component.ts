@@ -7,21 +7,21 @@ import { Router } from '@angular/router';
 import { PageResponseBookResponse } from '../../../../services/models/page-response-book-response';
 import { BookCardComponent } from "../../components/book-card/book-card.component";
 import { BookResponse } from '../../../../services/models/book-response';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-book-list',
+  selector: 'app-my-books',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule, BookCardComponent],
-  templateUrl: './book-list.component.html',
-  styleUrl: './book-list.component.scss'
+  imports: [CommonModule, HttpClientModule, FormsModule, BookCardComponent, RouterModule],
+  templateUrl: './my-books.component.html',
+  styleUrl: './my-books.component.scss'
 })
-export class BookListComponent implements OnInit{
+
+export class MyBooksComponent implements OnInit{
   bookResponse: PageResponseBookResponse = {};
   page: number = 0;
   size: number = 5;
   pages: any = [];
-  message: string = "";
-  level: string = "success";
 
   constructor(
     private bookService: BookService,
@@ -34,7 +34,7 @@ export class BookListComponent implements OnInit{
   }
 
   private findAllBooks() {
-    this.bookService.findAllBooks({
+    this.bookService.findAllBooksByOwner({
       page: this.page,
       size: this.size
     })
@@ -77,23 +77,29 @@ export class BookListComponent implements OnInit{
     return this.page === this.bookResponse.totalPages as number - 1;
   }
 
-  borrowBook(book: BookResponse) {
-    this.message = "";
-    this.bookService.borrowBook({
+  archiveBook(book: BookResponse) {
+    this.bookService.updArchivedStatus({
       'book_id': book.id as number
-    })
-      .subscribe({
-        next: () => {
-          this.level = "success";
-          this.message = "Book borrowed successfully";
-        },
-        error: (err) => {
-          console.log("Book borrowing failed", err);
-          this.level = "danger";
-          this.message = err.error.error;
-        }
-      });
-    console.log("The user is trying to borrow the book", book);
+    }).subscribe({
+      next: () => {
+        book.archived = !book.archived;
+      }
+    });
   }
 
+  shareBook(book: BookResponse) {
+    this.bookService.updShareableStatus({
+      'book_id': book.id as number
+    }).subscribe({
+      next: () => {
+        book.shareable = !book.shareable;
+      }
+    });
+  }
+
+  editBook(book: BookResponse) {
+    this.router.navigate(['books', 'manage', book.id]);
+    // navigate to the manage book page with the book id
+  }
 }
+
