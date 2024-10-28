@@ -43,7 +43,7 @@ export class MenuComponent implements OnInit{
     const token = this.tokenService.token;
     if (token) {
       const payload = this.decodeToken(token);
-      this.firstName = payload.firstName; // Adjust according to your token structure
+      this.firstName = payload.firstName; // Adjust according to the token structure
     }
   }
 
@@ -52,5 +52,8 @@ export class MenuComponent implements OnInit{
     return JSON.parse(atob(payload)); // Decode the token payload
   }
 
-
+  logout(): void {
+    localStorage.removeItem('token');
+    window.location.reload();
+  }
 }
